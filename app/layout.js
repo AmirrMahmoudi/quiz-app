@@ -1,8 +1,14 @@
 import "./globals.css";
 
-import { Vazirmatn } from "next/font/google";
-const vazir = Vazirmatn({
-  subsets: ["arabic", "latin"],
+import localFont from "next/font/local";
+// import { Vazirmatn } from "next/font/google";
+// const vazir = Vazirmatn({
+//   subsets: ["arabic", "latin"],
+//   display: "swap",
+// });
+
+const vazir = localFont({
+  src: "./Vazir.woff2",
   display: "swap",
 });
 
