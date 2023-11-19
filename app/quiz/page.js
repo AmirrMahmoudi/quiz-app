@@ -1,7 +1,8 @@
 "use client";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import { quiz } from "../data";
+import Loading from "./loading";
 export default function Page() {
   const [activeQuestion, setActiveQuestion] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState("");
@@ -18,11 +19,24 @@ export default function Page() {
   const { questions } = quiz;
 
   useEffect(() => {
-    setTimeout(() => {
-      setAnswers(questions[activeQuestion].answers);
-      setCorrectAnswer(questions[activeQuestion].correctAnswer);
-    }, 2000);
+    getData();
   }, [result]);
+
+  function getData() {
+    setAnswers(questions[activeQuestion].answers);
+    setCorrectAnswer(questions[activeQuestion].correctAnswer);
+  }
+
+  async function timeDelay() {
+    const delay = 1 + Math.floor(Math.random() * 5);
+    console.log(`Delay: ${delay}`);
+
+    await timeout(delay * 1000);
+  }
+
+  function timeout(delay) {
+    return new Promise((time) => setTimeout(time, delay));
+}
 
   // Select And Check
   const onAnswerSelect = (answer, index) => {
@@ -75,28 +89,20 @@ export default function Page() {
         {!showResult ? (
           <div className="quiz-container">
             <h3>{questions[activeQuestion].question}</h3>
-            {answers.length > 0 ? (
-              answers.map((answer, index) => (
-                <li
-                  key={index}
-                  onClick={() => onAnswerSelect(answer, index)}
-                  className={
-                    selectedAnswerIndex === index ? "li-selected" : "li-hover"
-                  }
-                >
-                  <span>{answer}</span>
-                </li>
-              ))
-            ) : (
-              <Skeleton
-                count={4}
-                direction="rtl"
-                duration={2}
-                height={50}
-                // baseColor="#f8f8f8"
-                highlightColor="#d8d8d8"
-              />
-            )}
+
+            {answers.map((answer, index) => (
+              <li
+                key={index}
+                onClick={() => onAnswerSelect(answer, index)}
+                className={
+                  selectedAnswerIndex === index ? "li-selected" : "li-hover"
+                }
+              >
+                <Suspense fallback={<Loading count={1} />}>
+                  <span>{timeDelay().then(() => answer)}</span>
+                </Suspense>
+              </li>
+            ))}
             {checked ? (
               <button className="btn" onClick={nextQuestion}>
                 {activeQuestion === questions.length - 1 ? "پایان" : "بعدی"}
