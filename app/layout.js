@@ -1,5 +1,5 @@
 import "./globals.css";
-
+import "react-loading-skeleton/dist/skeleton.css"
 import localFont from "next/font/local";
 // import { Vazirmatn } from "next/font/google";
 // const vazir = Vazirmatn({

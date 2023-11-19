@@ -1,20 +1,28 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import Skeleton from "react-loading-skeleton";
 import { quiz } from "../data";
-
 export default function Page() {
   const [activeQuestion, setActiveQuestion] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState("");
   const [checked, setChecked] = useState(false);
   const [selectedAnswerIndex, setSelectedAnswerIndex] = useState(null);
   const [showResult, setShowResult] = useState(false);
+  const [answers, setAnswers] = useState([]);
+  const [correctAnswer, setCorrectAnswer] = useState("");
   const [result, setResult] = useState({
     score: 0,
     correctAnswers: 0,
     worngAnswers: 0,
   });
   const { questions } = quiz;
-  const { answers, correctAnswer } = questions[activeQuestion];
+
+  useEffect(() => {
+    setTimeout(() => {
+      setAnswers(questions[activeQuestion].answers);
+      setCorrectAnswer(questions[activeQuestion].correctAnswer);
+    }, 2000);
+  }, [result]);
 
   // Select And Check
   const onAnswerSelect = (answer, index) => {
@@ -44,6 +52,8 @@ export default function Page() {
     );
     if (activeQuestion !== questions.length - 1) {
       setActiveQuestion((prev) => prev + 1);
+      setCorrectAnswer("");
+      setAnswers([]);
     } else {
       setActiveQuestion(0);
       setShowResult(true);
@@ -65,17 +75,28 @@ export default function Page() {
         {!showResult ? (
           <div className="quiz-container">
             <h3>{questions[activeQuestion].question}</h3>
-            {answers.map((answer, index) => (
-              <li
-                key={index}
-                onClick={() => onAnswerSelect(answer, index)}
-                className={
-                  selectedAnswerIndex === index ? "li-selected" : "li-hover"
-                }
-              >
-                <span>{answer}</span>
-              </li>
-            ))}
+            {answers.length > 0 ? (
+              answers.map((answer, index) => (
+                <li
+                  key={index}
+                  onClick={() => onAnswerSelect(answer, index)}
+                  className={
+                    selectedAnswerIndex === index ? "li-selected" : "li-hover"
+                  }
+                >
+                  <span>{answer}</span>
+                </li>
+              ))
+            ) : (
+              <Skeleton
+                count={4}
+                direction="rtl"
+                duration={2}
+                height={50}
+                // baseColor="#f8f8f8"
+                highlightColor="#d8d8d8"
+              />
+            )}
             {checked ? (
               <button className="btn" onClick={nextQuestion}>
                 {activeQuestion === questions.length - 1 ? "پایان" : "بعدی"}
