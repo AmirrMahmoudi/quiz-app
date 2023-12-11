@@ -1,4 +1,4 @@
-import Frame from "@/components/modal/Frame";
+import Frame from "@/src/components/modal/Frame";
 
 export default function PhotoPage() {
   const photo =
