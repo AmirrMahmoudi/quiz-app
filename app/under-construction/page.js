@@ -1,4 +1,5 @@
-import styles from "./styles.module.css";
+import styles from "@/styles/underConstruction.module.css";
+
 export default function underConstraction() {
   return (
     <>

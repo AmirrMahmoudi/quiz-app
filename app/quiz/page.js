@@ -1,8 +1,8 @@
 "use client";
 import { useState } from "react";
 
-import { quiz } from "../data";
-import { Answers, Buttons, Result } from "./components";
+import { quiz } from "@/data";
+import { Answers, Buttons, Result } from "@/components/quiz";
 
 export default function Quiz() {
   const [activeQuestion, setActiveQuestion] = useState(0);

@@ -1,5 +1,5 @@
-import Frame from "../../components/frame";
-import Modal from "../../components/modal";
+import Frame from "@/components/modal/Frame";
+import Modal from "@/components/modal/Modal";
 
 export default function PhotoModal() {
   const photo =

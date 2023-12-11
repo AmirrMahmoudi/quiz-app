@@ -1,10 +1,10 @@
-import "./globals.css";
+import "@/styles/globals.css";
 import "react-loading-skeleton/dist/skeleton.css";
 
 import localFont from "next/font/local";
 
 const vazir = localFont({
-  src: "./Vazir.woff2",
+  src: "../assets/Vazir.woff2",
   display: "swap",
 });
 
