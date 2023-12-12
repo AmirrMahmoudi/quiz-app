@@ -4,7 +4,7 @@ import { useState } from "react";
 import { quiz } from "@/src/data";
 import { Answers, Buttons, Result } from "@/src/components/quiz";
 
-export default function Quiz() {
+export default function Quiz({ dict, lang }) {
   const [activeQuestion, setActiveQuestion] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState("");
   const [checked, setChecked] = useState(false);
@@ -16,7 +16,7 @@ export default function Quiz() {
     wrongAnswers: 0,
   });
 
-  const { questions } = quiz;
+  const questions = lang === "en-us" ? quiz.Enquestions : quiz.Faquestions;
   const { answers, correctAnswer } = questions[activeQuestion];
 
   // Select And Check
@@ -60,7 +60,7 @@ export default function Quiz() {
 
   return (
     <>
-      <h1 className="text-center">صفحه آزمون</h1>
+      <h1 className="text-center">{dict["quiz"].title}</h1>
       <br />
       <div className="bg-gray-50 dark:bg-gray-800 shadow-lg dark:shadow-dark rounded mx-auto w-7/12">
         {!showResult ? (
@@ -69,7 +69,10 @@ export default function Quiz() {
             <div className="text-center mb-2">
               {!showResult ? (
                 <h2 className="text-gray-400">
-                  آزمون : {activeQuestion + 1} از{" "}
+                  {dict["quiz"].quizNum1}:{"  "}
+                  {activeQuestion + 1}
+                  {dict["quiz"].quizNum2}
+                  {"  "}
                   <span>{questions.length}</span>
                 </h2>
               ) : null}
@@ -90,11 +93,12 @@ export default function Quiz() {
                 nextQuestion={nextQuestion}
                 activeQuestion={activeQuestion}
                 questions={questions}
+                dict={dict}
               />
             </div>
           </div>
         ) : (
-          <Result result={result} questions={questions} />
+          <Result result={result} questions={questions} dict={dict} />
         )}
       </div>
     </>

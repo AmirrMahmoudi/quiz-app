@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import Loading from "@/src/app/quiz/loading";
+import Loading from "@/src/app/[lang]/quiz/loading";
 
 export default function Answers({
   answers,
@@ -14,7 +14,7 @@ export default function Answers({
       style={selectedAnswerIndex === index ? { backgroundColor: "black" } : {}}
     >
       <Suspense fallback={<Loading count={1} />}>
-        <span className=" text-grey-700 dark:text-gray-400 text-lg mr-4">
+        <span className=" text-grey-700 dark:text-gray-400 text-lg mr-4 ml-4">
           {answer}
         </span>
       </Suspense>

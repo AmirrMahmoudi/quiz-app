@@ -13,14 +13,31 @@ function getLocale(request) {
 
   const defaultLocale = "fa-ir";
   const locale = match(languages, locales, defaultLocale);
-  console.log(`Locale:${locale}`);
+  console.log(`Locale: ${locale}`);
 
   return locale;
 }
 
 export function middleware(request) {
-  const locale = getLocale(request);
-  console.log(`Middleware: ${locale}`);
+  const { pathname } = request.nextUrl;
+  const pathnameHasLocale = locales.some(
+    (locale) => 
+    pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
+  );
 
-  return; 
+  if (pathnameHasLocale) return;
+
+  const locale = getLocale(request);
+
+  return NextResponse.redirect(
+    new URL(
+      `/${locale}${pathname.startsWith("/") ? "" : "/"}${pathname}`,
+      request.url
+    )
+  );
 }
+
+export const config = {
+  // Matcher ignoring `/_next` and `/api/`
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
+};
