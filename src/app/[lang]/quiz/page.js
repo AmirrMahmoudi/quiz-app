@@ -3,6 +3,7 @@ import { useState } from "react";
 
 import { quiz } from "@/src/data";
 import { Answers, Buttons, Result } from "@/src/components/quiz";
+import LocaleSwitcher from "@/src/components/localeSwitcher";
 
 export default function Quiz({ dict, lang }) {
   const [activeQuestion, setActiveQuestion] = useState(0);
@@ -60,6 +61,9 @@ export default function Quiz({ dict, lang }) {
 
   return (
     <>
+      <div className="text-center">
+        <LocaleSwitcher />
+      </div>
       <h1 className="text-center">{dict["quiz"].title}</h1>
       <br />
       <div className="bg-gray-50 dark:bg-gray-800 shadow-lg dark:shadow-dark rounded mx-auto w-7/12">
