@@ -1,4 +1,5 @@
 import CredentialsProvider from "next-auth/providers/credentials";
+import { signIn } from "next-auth/react";
 
 export const options = {
   providers: [
@@ -26,7 +27,7 @@ export const options = {
 
         const user = {
           id: "11",
-          fullname: "امیرحسین محمودی",
+          name: "امیرحسین محمودی",
           username: "amirhossein",
           password: "123321",
         };
@@ -38,8 +39,11 @@ export const options = {
         } else {
           return null;
         }
-        
       },
     }),
   ],
+  pages: {
+    signIn: "/auth/login",
+    signOut: "/auth/signout",
+  },
 };
