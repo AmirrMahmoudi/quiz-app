@@ -5,6 +5,18 @@ import { getLangs } from "../langs";
 export default async function About({ params }) {
   const dict = await getLangs(params.lang);
 
+<<<<<<< HEAD:src/app/[lang]/about/page.js
+=======
+import { getServerSession } from "next-auth/next";
+import { redirect } from "next/navigation";
+import { options } from "../api/auth/[...nextauth]/options";
+
+export default async function About() {
+  const session = await getServerSession(options);
+  if (!session) {
+    redirect("/api/auth/signIn?callbackUrl=/about");
+  }
+>>>>>>> next-auth:src/app/about/page.js
   const photo =
     "https://lh3.googleusercontent.com/ogw/AKPQZvxOkzt7k2r92-Pjt8mVrI1VHWmICwnCh7mab7ZC=l320";
 

@@ -1,11 +1,28 @@
 "use client";
 import { useState } from "react";
 
+import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
+import Link from "next/link";
+
 import { quiz } from "@/src/data";
 import { Answers, Buttons, Result } from "@/src/components/quiz";
+<<<<<<< HEAD:src/app/[lang]/quiz/page.js
 import LocaleSwitcher from "@/src/components/localeSwitcher";
 
 export default function Quiz({ dict, lang }) {
+=======
+import UserCard from "@/src/components/card/UserCard";
+
+export default function Quiz() {
+  const { data: session } = useSession({
+    required: true,
+    onUnauthenticated() {
+      redirect("/api/auth/signin?callbackUrl=/quiz");
+    },
+  });
+
+>>>>>>> next-auth:src/app/quiz/page.js
   const [activeQuestion, setActiveQuestion] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState("");
   const [checked, setChecked] = useState(false);
@@ -61,10 +78,28 @@ export default function Quiz({ dict, lang }) {
 
   return (
     <>
+<<<<<<< HEAD:src/app/[lang]/quiz/page.js
       <div className="text-center">
         <LocaleSwitcher />
       </div>
       <h1 className="text-center">{dict["quiz"].title}</h1>
+=======
+      {session?.user ? (
+        <>
+          <UserCard user={session?.user} />
+          <div className="w-full text-center">
+            <Link
+              href="/api/auth/signout"
+              className="mx-1 my-5 px-6 py-1 text-sm rounded shadow bg-red-600 hover:bg-red-400 text-red-200 w-20 cursor-pointer"
+            >
+              خروج
+            </Link>
+          </div>
+        </>
+      ) : null}
+
+      <h1 className="text-center">صفحه آزمون</h1>
+>>>>>>> next-auth:src/app/quiz/page.js
       <br />
       <div className="bg-gray-50 dark:bg-gray-800 shadow-lg dark:shadow-dark rounded mx-auto w-7/12">
         {!showResult ? (

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { NextResponse } from "next/server";
 import { match } from "@formatjs/intl-localematcher";
 import Negotiator from "negotiator";
@@ -40,4 +41,10 @@ export function middleware(request) {
 export const config = {
   // Matcher ignoring `/_next` and `/api/`
   matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
+=======
+export { default } from "next-auth/middleware";
+
+export const config = {
+  matcher: ["/about", "/quiz"],
+>>>>>>> next-auth
 };
