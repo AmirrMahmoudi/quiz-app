@@ -1,8 +1,15 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { getServerSession } from "next-auth/next";
+import { redirect } from "next/navigation";
+import { options } from "../api/auth/[...nextauth]/options";
+
 export default async function About() {
-  // await new Promise ((resolve)=> setTimeout(resolve,1000));
+  const session = await getServerSession(options);
+  if (!session) {
+    redirect("/api/auth/signIn?callbackUrl=/about");
+  }
   const photo =
     "https://lh3.googleusercontent.com/ogw/AKPQZvxOkzt7k2r92-Pjt8mVrI1VHWmICwnCh7mab7ZC=l320";
 
